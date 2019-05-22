@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>USS Macon</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            background-color: rgb(32, 32, 32);
+        }
+
+        .full {
+            width: 100vw;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <svg id="home" class="full" version="1.1" xmlns="http://www.w3.org/2000/svg"
+         xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1600 900">
+        <image id="home-src" width="1600" height="900" xlink:href="img/home.svg">
+        </image>
+        <rect x="112" y="231" fill="#585" opacity="0" width="172" height="105" cursor="pointer"
+              onclick="switchPage(1)"/>
+        <rect x="361" y="231" fill="#585" opacity="0" width="172" height="105" cursor="pointer"
+              onclick="switchPage(2)"/>
+        <rect x="610" y="231" fill="#585" opacity="0" width="172" height="105" cursor="pointer"
+              onclick="switchPage(3)"/>
+        <rect x="859" y="231" fill="#585" opacity="0" width="172" height="105" cursor="pointer"
+              onclick="switchPage(4)"/>
+        <rect x="1107" y="231" fill="#585" opacity="0" width="172" height="105" cursor="pointer"
+              onclick="switchPage(5)"/>
+        <rect x="1357" y="231" fill="#585" opacity="0" width="172" height="105" cursor="pointer"
+              onclick="switchPage(6)"/>
+        <rect x="112" y="398" fill="#585" opacity="0" width="172" height="105" cursor="pointer"
+              onclick="switchPage(7)"/>
+        <rect x="361" y="398" fill="#585" opacity="0" width="172" height="105" cursor="pointer"
+              onclick="switchPage(8)"/>
+        <rect x="610" y="398" fill="#585" opacity="0" width="172" height="105" cursor="pointer"
+              onclick="switchPage(9)"/>
+        <rect x="859" y="398" fill="#585" opacity="0" width="172" height="105" cursor="pointer"
+              onclick="switchPage(10)"/>
+        <rect x="1107" y="398" fill="#585" opacity="0" width="172" height="105" cursor="pointer"
+              onclick="switchPage(11)"/>
+        <rect x="1357" y="398" fill="#585" opacity="0" width="172" height="105" cursor="pointer"
+              onclick="switchPage(12)"/>
+        <rect x="112" y="564" fill="#585" opacity="0" width="172" height="105" cursor="pointer"
+              onclick="switchPage(13)"/>
+        <rect x="361" y="564" fill="#585" opacity="0" width="172" height="105" cursor="pointer"
+              onclick="switchPage(14)"/>
+        <rect x="610" y="564" fill="#585" opacity="0" width="172" height="105" cursor="pointer"
+              onclick="switchPage(15)"/>
+        <rect x="859" y="564" fill="#585" opacity="0" width="172" height="105" cursor="pointer"
+              onclick="switchPage(16)"/>
+        <rect x="1107" y="564" fill="#585" opacity="0" width="172" height="105" cursor="pointer"
+              onclick="switchPage(17)"/>
+        <rect x="1357" y="564" fill="#585" opacity="0" width="172" height="105" cursor="pointer"
+              onclick="switchPage(18)"/>
+        <rect x="112" y="730" fill="#585" opacity="0" width="172" height="105" cursor="pointer"
+              onclick="switchPage(19)"/>
+        <rect x="361" y="730" fill="#585" opacity="0" width="172" height="105" cursor="pointer"
+              onclick="switchPage(20)"/>
+        <rect x="610" y="730" fill="#585" opacity="0" width="172" height="105" cursor="pointer"
+              onclick="switchPage(21)"/>
+        <rect x="859" y="730" fill="#585" opacity="0" width="172" height="105" cursor="pointer"
+              onclick="switchPage(22)"/>
+    </svg>
+    <svg id="page" class="full hidden" version="1.1" xmlns="http://www.w3.org/2000/svg"
+         xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1600 900">
+        <image id="page-src" width="1600" height="900" xlink:href="img/1.svg">
+        </image>
+        <style>
+            .pointer {
+                cursor: pointer;
+            }
+        </style>
+        <rect class="pointer" x="1453" y="32" fill="#585" opacity="0" width="147" height="146" cursor="pointer"
+              onclick="switchPage(0)"/>
+    </svg>
+</div>
+<script>
+    // You can also require other files to run in this process
+    require("./renderer.js");
+
+    function switchPage(id) {
+        console.log(id);
+        if (id === 0) {
+            $("#page").hide();
+            $("#home").show();
+        } else {
+            $("#page-src").attr("xlink:href", "img/" + id + ".svg");
+            $("#page").show();
+            $("#home").hide();
+        }
+
+
+    }
+
+    function $(selector) {
+        let wrapper = document.querySelector(selector);
+
+        // get Dom wrapper.
+        //function to add custom functions to the wrapper.
+        this.addFunction = function(name, code) {
+            // if code is undefined, assume name is an object with name:function pairs
+            //enumerate the object name
+            if (!code) {
+
+                for (let key in name) {
+                    //make sure item is not a prototype
+                    if (name.hasOwnProperty(key)) {
+
+                        let value = name[key];
+                        //set function name in the wrapper to the value(function code)
+                        wrapper[key] = value;
+
+                    }
+                }
+            }
+            //there is only one function being defined. Set the name to the function(code)
+            else {
+                wrapper[name] = code;
+            }
+        };
+        //add utility functions here
+        this.addFunction({
+            "show": function() {
+                this.classList.remove("hidden");
+            },
+            "hide": function() {
+                this.classList.add("hidden");
+
+            },
+            "attr": function(name, val) {
+                this.setAttribute(name, val);
+
+            },
+            "append": function(el) {
+                this.appendChild(el);
+
+            },
+        });
+
+
+        return wrapper;
+
+    };
+</script>
+</body>
+</html>
